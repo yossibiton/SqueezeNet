@@ -465,7 +465,7 @@ def main():
     #base=64,inc=64
     #a=[32,64,96,128]
     
-    # a*ratio = S_1x1
+    # a/ratio = S_1x1
     # ratio = SR / 2
     if sys.argv[2] == 'large':
       ratio = 1.0 
@@ -476,7 +476,7 @@ def main():
     network_str = generate_fully_train_val(int(sys.argv[1]), a, ratio)
     print "BatchNorm =", sys.argv[1], sys.argv[2]
 
-    fp = open('trainval.template', 'w')
+    fp = open('train_val.prototxt', 'w')
     fp.write(network_str)
     fp.close()
 
