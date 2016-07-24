@@ -5,46 +5,12 @@
 #     Journal = {arXiv:1602.07360},
 #     Year = {2016}
 # }
-layer {
-  name: "data"
-  type: "Data"
-  top: "data"
-  top: "label"
-  include {
-    phase: TRAIN
-  }
-  transform_param {
-    crop_size: 227
-    mean_value: 104
-    mean_value: 117
-    mean_value: 123
-  }
-  data_param {
-    source: "examples/imagenet/ilsvrc12_train_lmdb"
-    batch_size: 32
-    backend: LMDB
-  }
-}
-layer {
-  name: "data"
-  type: "Data"
-  top: "data"
-  top: "label"
-  include {
-    phase: TEST
-  }
-  transform_param {
-    crop_size: 227
-    mean_value: 104
-    mean_value: 117
-    mean_value: 123
-  }
-  data_param {
-    source: "examples/imagenet/ilsvrc12_val_lmdb"
-    batch_size: 25 #not *iter_size
-    backend: LMDB
-  }
-}
+input: "data"
+input_dim: 1
+input_dim: 3
+input_dim: 113 #227
+input_dim: 49  #227
+
 layer {
   name: "conv1"
   type: "Convolution"
@@ -54,7 +20,6 @@ layer {
     num_output: 64
     kernel_size: 3
     stride: 2
-    pad: 1
     weight_filler {
       type: "xavier"
     }
@@ -75,7 +40,6 @@ layer {
     pool: MAX
     kernel_size: 3
     stride: 2
-    pad: 1
   }
 }
 layer {
@@ -658,38 +622,5 @@ layer {
   pooling_param {
     pool: AVE
     global_pooling: true
-  }
-}
-layer {
-  name: "loss"
-  type: "SoftmaxWithLoss"
-  bottom: "pool10"
-  bottom: "label"
-  top: "loss"
-  #include {
-  #  phase: TRAIN
-  #}
-}
-layer {
-  name: "accuracy"
-  type: "Accuracy"
-  bottom: "pool10"
-  bottom: "label"
-  top: "accuracy"
-  #include {
-  #  phase: TEST
-  #}
-}
-layer {
-  name: "accuracy_top5"
-  type: "Accuracy"
-  bottom: "pool10"
-  bottom: "label"
-  top: "accuracy_top5"
-  #include {
-  #  phase: TEST
-  #}
-  accuracy_param {
-    top_k: 5
   }
 }

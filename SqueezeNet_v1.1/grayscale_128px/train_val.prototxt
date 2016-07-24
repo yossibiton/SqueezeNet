@@ -14,14 +14,12 @@ layer {
     phase: TRAIN
   }
   transform_param {
-    crop_size: 227
-    mean_value: 104
-    mean_value: 117
-    mean_value: 123
+    crop_size: 128
+    mean_value: ???
   }
   data_param {
-    source: "examples/imagenet/ilsvrc12_train_lmdb"
-    batch_size: 32
+    source: "/home/gpu-admin/data/ImageNet_preprocessed/ilsvrc12_train_lmdb"
+    batch_size: 512
     backend: LMDB
   }
 }
@@ -34,14 +32,12 @@ layer {
     phase: TEST
   }
   transform_param {
-    crop_size: 227
-    mean_value: 104
-    mean_value: 117
-    mean_value: 123
+    crop_size: 128
+    mean_value: ???
   }
   data_param {
-    source: "examples/imagenet/ilsvrc12_val_lmdb"
-    batch_size: 25 #not *iter_size
+    source: "/home/gpu-admin/data/ImageNet_preprocessed/ilsvrc12_val_lmdb"
+    batch_size: 25 
     backend: LMDB
   }
 }
@@ -54,7 +50,6 @@ layer {
     num_output: 64
     kernel_size: 3
     stride: 2
-    pad: 1
     weight_filler {
       type: "xavier"
     }
@@ -75,7 +70,6 @@ layer {
     pool: MAX
     kernel_size: 3
     stride: 2
-    pad: 1
   }
 }
 layer {
