@@ -47,7 +47,7 @@ layer {
   bottom: "data"
   top: "conv1"
   convolution_param {
-    num_output: 32
+    num_output: 64
     kernel_size: 3
     stride: 2
     weight_filler {
@@ -78,7 +78,7 @@ layer {
   bottom: "pool1"
   top: "fire2/squeeze1x1"
   convolution_param {
-    num_output: 8
+    num_output: 16
     kernel_size: 1
     weight_filler {
       type: "xavier"
@@ -97,7 +97,7 @@ layer {
   bottom: "fire2/squeeze1x1"
   top: "fire2/expand1x1"
   convolution_param {
-    num_output: 32
+    num_output: 64
     kernel_size: 1
     weight_filler {
       type: "xavier"
@@ -116,7 +116,7 @@ layer {
   bottom: "fire2/squeeze1x1"
   top: "fire2/expand3x3"
   convolution_param {
-    num_output: 32
+    num_output: 64
     pad: 1
     kernel_size: 3
     weight_filler {
@@ -143,7 +143,7 @@ layer {
   bottom: "fire2/concat"
   top: "fire3/squeeze1x1"
   convolution_param {
-    num_output: 8
+    num_output: 16
     kernel_size: 1
     weight_filler {
       type: "xavier"
@@ -162,7 +162,7 @@ layer {
   bottom: "fire3/squeeze1x1"
   top: "fire3/expand1x1"
   convolution_param {
-    num_output: 32
+    num_output: 64
     kernel_size: 1
     weight_filler {
       type: "xavier"
@@ -181,7 +181,7 @@ layer {
   bottom: "fire3/squeeze1x1"
   top: "fire3/expand3x3"
   convolution_param {
-    num_output: 32
+    num_output: 64
     pad: 1
     kernel_size: 3
     weight_filler {
@@ -219,7 +219,7 @@ layer {
   bottom: "pool3"
   top: "fire4/squeeze1x1"
   convolution_param {
-    num_output: 16
+    num_output: 32
     kernel_size: 1
     weight_filler {
       type: "xavier"
@@ -238,7 +238,7 @@ layer {
   bottom: "fire4/squeeze1x1"
   top: "fire4/expand1x1"
   convolution_param {
-    num_output: 64
+    num_output: 128
     kernel_size: 1
     weight_filler {
       type: "xavier"
@@ -257,7 +257,7 @@ layer {
   bottom: "fire4/squeeze1x1"
   top: "fire4/expand3x3"
   convolution_param {
-    num_output: 64
+    num_output: 128
     pad: 1
     kernel_size: 3
     weight_filler {
@@ -284,7 +284,7 @@ layer {
   bottom: "fire4/concat"
   top: "fire5/squeeze1x1"
   convolution_param {
-    num_output: 16
+    num_output: 32
     kernel_size: 1
     weight_filler {
       type: "xavier"
@@ -303,7 +303,7 @@ layer {
   bottom: "fire5/squeeze1x1"
   top: "fire5/expand1x1"
   convolution_param {
-    num_output: 64
+    num_output: 128
     kernel_size: 1
     weight_filler {
       type: "xavier"
@@ -322,7 +322,7 @@ layer {
   bottom: "fire5/squeeze1x1"
   top: "fire5/expand3x3"
   convolution_param {
-    num_output: 64
+    num_output: 128
     pad: 1
     kernel_size: 3
     weight_filler {
@@ -360,7 +360,7 @@ layer {
   bottom: "pool5"
   top: "fire6/squeeze1x1"
   convolution_param {
-    num_output: 24
+    num_output: 48
     kernel_size: 1
     weight_filler {
       type: "xavier"
@@ -379,7 +379,7 @@ layer {
   bottom: "fire6/squeeze1x1"
   top: "fire6/expand1x1"
   convolution_param {
-    num_output: 96
+    num_output: 192
     kernel_size: 1
     weight_filler {
       type: "xavier"
@@ -398,7 +398,7 @@ layer {
   bottom: "fire6/squeeze1x1"
   top: "fire6/expand3x3"
   convolution_param {
-    num_output: 96
+    num_output: 192
     pad: 1
     kernel_size: 3
     weight_filler {
@@ -425,7 +425,7 @@ layer {
   bottom: "fire6/concat"
   top: "fire7/squeeze1x1"
   convolution_param {
-    num_output: 24
+    num_output: 48
     kernel_size: 1
     weight_filler {
       type: "xavier"
@@ -444,7 +444,7 @@ layer {
   bottom: "fire7/squeeze1x1"
   top: "fire7/expand1x1"
   convolution_param {
-    num_output: 96
+    num_output: 192
     kernel_size: 1
     weight_filler {
       type: "xavier"
@@ -463,7 +463,7 @@ layer {
   bottom: "fire7/squeeze1x1"
   top: "fire7/expand3x3"
   convolution_param {
-    num_output: 96
+    num_output: 192
     pad: 1
     kernel_size: 3
     weight_filler {
@@ -490,7 +490,7 @@ layer {
   bottom: "fire7/concat"
   top: "fire8/squeeze1x1"
   convolution_param {
-    num_output: 32
+    num_output: 64
     kernel_size: 1
     weight_filler {
       type: "xavier"
@@ -509,7 +509,7 @@ layer {
   bottom: "fire8/squeeze1x1"
   top: "fire8/expand1x1"
   convolution_param {
-    num_output: 128
+    num_output: 256
     kernel_size: 1
     weight_filler {
       type: "xavier"
@@ -528,7 +528,7 @@ layer {
   bottom: "fire8/squeeze1x1"
   top: "fire8/expand3x3"
   convolution_param {
-    num_output: 128
+    num_output: 256
     pad: 1
     kernel_size: 3
     weight_filler {
@@ -555,7 +555,7 @@ layer {
   bottom: "fire8/concat"
   top: "fire9/squeeze1x1"
   convolution_param {
-    num_output: 32
+    num_output: 64
     kernel_size: 1
     weight_filler {
       type: "xavier"
@@ -574,7 +574,7 @@ layer {
   bottom: "fire9/squeeze1x1"
   top: "fire9/expand1x1"
   convolution_param {
-    num_output: 128
+    num_output: 256
     kernel_size: 1
     weight_filler {
       type: "xavier"
@@ -593,7 +593,7 @@ layer {
   bottom: "fire9/squeeze1x1"
   top: "fire9/expand3x3"
   convolution_param {
-    num_output: 128
+    num_output: 256
     pad: 1
     kernel_size: 3
     weight_filler {
