@@ -1,46 +1,19 @@
-# please cite:
-# @article{SqueezeNet,
-#     Author = {Forrest N. Iandola and Matthew W. Moskewicz and Khalid Ashraf and Song Han and William J. Dally and Kurt Keutzer},
-#     Title = {SqueezeNet: AlexNet-level accuracy with 50x fewer parameters and $<$1MB model size},
-#     Journal = {arXiv:1602.07360},
-#     Year = {2016}
-# }
-layer {
-  name: "data"
-  type: "Data"
-  top: "data"
-  top: "label"
-  include {
-    phase: TRAIN
-  }
-  transform_param {
-    crop_size: 128
-    mean_value: 117
-  }
-  data_param {
-    source: "/home/gpu-admin/data/ImageNet_preprocessed/ilsvrc12_train_lmdb"
-    batch_size: 512
-    backend: LMDB
-  }
-}
-layer {
-  name: "data"
-  type: "Data"
-  top: "data"
-  top: "label"
-  include {
-    phase: TEST
-  }
-  transform_param {
-    crop_size: 128
-    mean_value: 117
-  }
-  data_param {
-    source: "/home/gpu-admin/data/ImageNet_preprocessed/ilsvrc12_val_lmdb"
-    batch_size: 512 
-    backend: LMDB
-  }
-}
+name: "SqueezeNet1.1"
+
+input: "data"
+input_dim: 1
+input_dim: 3
+# these values are changed "on the fly" according to image size
+input_dim: 128
+input_dim: 128
+
+
+input: "label"
+input_dim: 1 # to be changed on-the-fly to match num ROIs
+input_dim: 1
+input_dim: 1
+input_dim: 1
+
 layer {
   name: "conv1"
   type: "Convolution"
@@ -663,27 +636,4 @@ layer {
   #include {
   #  phase: TRAIN
   #}
-}
-layer {
-  name: "accuracy"
-  type: "Accuracy"
-  bottom: "pool10"
-  bottom: "label"
-  top: "accuracy"
-  #include {
-  #  phase: TEST
-  #}
-}
-layer {
-  name: "accuracy_top5"
-  type: "Accuracy"
-  bottom: "pool10"
-  bottom: "label"
-  top: "accuracy_top5"
-  #include {
-  #  phase: TEST
-  #}
-  accuracy_param {
-    top_k: 5
-  }
 }

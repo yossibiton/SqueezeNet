@@ -1,0 +1,12 @@
+base_e = 128
+inc_e = 128
+pct_3x3 = 0.5
+freq = 2
+SR = 0.125
+
+---- layer parameters
+expand : 
+E(i) = base_e + inc_e*floor(i/freq)
+E(i) = E_1x1(i) + E_3x3(i) = (1-pct_3x3)*E(i) + pct_3x3*E(i)
+squeeze :
+S_1x1(i) = SR*E(i)

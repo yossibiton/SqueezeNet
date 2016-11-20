@@ -7,7 +7,7 @@
 # }
 layer {
   name: "data"
-  type: "Data"
+  type: "ImageData"
   top: "data"
   top: "label"
   include {
@@ -17,15 +17,17 @@ layer {
     crop_size: 128
     mean_value: 117
   }
-  data_param {
-    source: "/home/gpu-admin/data/ImageNet_preprocessed/ilsvrc12_train_lmdb"
+  image_data_param {
+    source: "/home/gpu-admin/data/ImageNet/caffe/train.txt"
+    root_folder: "/home/gpu-admin/data/ImageNet_preprocessed/train/"
+    shuffle: true
     batch_size: 512
-    backend: LMDB
+    is_color: false
   }
 }
 layer {
   name: "data"
-  type: "Data"
+  type: "ImageData"
   top: "data"
   top: "label"
   include {
@@ -35,10 +37,11 @@ layer {
     crop_size: 128
     mean_value: 117
   }
-  data_param {
-    source: "/home/gpu-admin/data/ImageNet_preprocessed/ilsvrc12_val_lmdb"
-    batch_size: 512 
-    backend: LMDB
+  image_data_param {
+    source: "/home/gpu-admin/data/ImageNet/caffe/val.txt"
+    root_folder: "/home/gpu-admin/data/ImageNet_preprocessed/val/"
+    batch_size: 25
+    is_color: false
   }
 }
 layer {

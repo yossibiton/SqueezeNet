@@ -10,7 +10,7 @@ momentum: 0.9
 weight_decay: 0.0002
 
 snapshot: 10000
-snapshot_prefix: "../../output/SqueezeNet_v1.1/grayscale_128px/train"
+snapshot_prefix: "../../output/SqueezeNet_v1.1/rgb_128px_b/train"
 solver_mode: GPU
 random_seed: 42
 net: "train_val.prototxt" #we typically do `cd SqueezeNet_v1.0; caffe train <args>`
