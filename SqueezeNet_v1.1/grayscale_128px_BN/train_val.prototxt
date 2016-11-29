@@ -9,7 +9,7 @@ layer {
   }
   data_param {
     source: "/home/gpu-admin/data/ImageNet_preprocessed/ilsvrc12_train_lmdb"
-    batch_size: 512
+    batch_size: 128
     backend: LMDB
   }
   transform_param {
@@ -27,7 +27,7 @@ layer {
   }
   data_param {
     source: "/home/gpu-admin/data/ImageNet_preprocessed/ilsvrc12_val_lmdb"
-    batch_size: 512
+    batch_size: 128
     backend: LMDB
   }
   transform_param {
@@ -42,48 +42,46 @@ layer {
   top: "conv1"
   convolution_param {
     num_output: 64
-    kernel: 3
+    kernel_size: 3
     stride: 2
+    pad: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
 }
 layer {
-  name: "conv1_bn"
+  name: "bn1"
   type: "BatchNorm"
   bottom: "conv1"
-  top: "conv1_bn"
+  top: "bn1"
 }
 layer {
-  name: "conv1_bn_scale"
+  name: "bn1_scale"
   type: "Scale"
-  bottom: "conv1_bn"
-  top: "conv1_bn"
+  bottom: "bn1"
+  top: "bn1"
   scale_param {
     bias_term: true
   }
 }
 layer {
-  name: "relu_conv1"
+  name: "relu1"
   type: "ReLU"
-  bottom: "conv1_bn"
-  top: "conv1_bn"
+  bottom: "bn1"
+  top: "bn1"
 }
 layer {
   name: "pool1"
   type: "Pooling"
-  bottom: "conv1_bn"
+  bottom: "bn1"
   top: "pool1"
   pooling_param {
     pool: MAX
     kernel_size: 3
     stride: 2
+    pad: 1
   }
 }
 layer {
@@ -93,13 +91,9 @@ layer {
   top: "fire2/squeeze1x1"
   convolution_param {
     num_output: 16
-    kernel: 1
+    kernel_size: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -128,17 +122,13 @@ layer {
 layer {
   name: "fire2/expand1x1"
   type: "Convolution"
-  bottom: "fire2/squeeze1x1"
+  bottom: "fire2/squeeze1x1_bn"
   top: "fire2/expand1x1"
   convolution_param {
     num_output: 64
-    kernel: 1
+    kernel_size: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -146,17 +136,14 @@ layer {
 layer {
   name: "fire2/expand3x3"
   type: "Convolution"
-  bottom: "fire2/squeeze1x1"
+  bottom: "fire2/squeeze1x1_bn"
   top: "fire2/expand3x3"
   convolution_param {
     num_output: 64
-    kernel: 3
+    kernel_size: 3
+    pad: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -196,13 +183,9 @@ layer {
   top: "fire3/squeeze1x1"
   convolution_param {
     num_output: 16
-    kernel: 1
+    kernel_size: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -231,17 +214,13 @@ layer {
 layer {
   name: "fire3/expand1x1"
   type: "Convolution"
-  bottom: "fire3/squeeze1x1"
+  bottom: "fire3/squeeze1x1_bn"
   top: "fire3/expand1x1"
   convolution_param {
     num_output: 64
-    kernel: 1
+    kernel_size: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -249,17 +228,14 @@ layer {
 layer {
   name: "fire3/expand3x3"
   type: "Convolution"
-  bottom: "fire3/squeeze1x1"
+  bottom: "fire3/squeeze1x1_bn"
   top: "fire3/expand3x3"
   convolution_param {
     num_output: 64
-    kernel: 3
+    kernel_size: 3
+    pad: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -310,13 +286,9 @@ layer {
   top: "fire4/squeeze1x1"
   convolution_param {
     num_output: 24
-    kernel: 1
+    kernel_size: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -345,17 +317,13 @@ layer {
 layer {
   name: "fire4/expand1x1"
   type: "Convolution"
-  bottom: "fire4/squeeze1x1"
+  bottom: "fire4/squeeze1x1_bn"
   top: "fire4/expand1x1"
   convolution_param {
     num_output: 96
-    kernel: 1
+    kernel_size: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -363,17 +331,14 @@ layer {
 layer {
   name: "fire4/expand3x3"
   type: "Convolution"
-  bottom: "fire4/squeeze1x1"
+  bottom: "fire4/squeeze1x1_bn"
   top: "fire4/expand3x3"
   convolution_param {
     num_output: 96
-    kernel: 3
+    kernel_size: 3
+    pad: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -413,13 +378,9 @@ layer {
   top: "fire5/squeeze1x1"
   convolution_param {
     num_output: 24
-    kernel: 1
+    kernel_size: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -448,17 +409,13 @@ layer {
 layer {
   name: "fire5/expand1x1"
   type: "Convolution"
-  bottom: "fire5/squeeze1x1"
+  bottom: "fire5/squeeze1x1_bn"
   top: "fire5/expand1x1"
   convolution_param {
     num_output: 96
-    kernel: 1
+    kernel_size: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -466,17 +423,14 @@ layer {
 layer {
   name: "fire5/expand3x3"
   type: "Convolution"
-  bottom: "fire5/squeeze1x1"
+  bottom: "fire5/squeeze1x1_bn"
   top: "fire5/expand3x3"
   convolution_param {
     num_output: 96
-    kernel: 3
+    kernel_size: 3
+    pad: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -527,13 +481,9 @@ layer {
   top: "fire6/squeeze1x1"
   convolution_param {
     num_output: 32
-    kernel: 1
+    kernel_size: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -562,17 +512,13 @@ layer {
 layer {
   name: "fire6/expand1x1"
   type: "Convolution"
-  bottom: "fire6/squeeze1x1"
+  bottom: "fire6/squeeze1x1_bn"
   top: "fire6/expand1x1"
   convolution_param {
     num_output: 128
-    kernel: 1
+    kernel_size: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -580,17 +526,14 @@ layer {
 layer {
   name: "fire6/expand3x3"
   type: "Convolution"
-  bottom: "fire6/squeeze1x1"
+  bottom: "fire6/squeeze1x1_bn"
   top: "fire6/expand3x3"
   convolution_param {
     num_output: 128
-    kernel: 3
+    kernel_size: 3
+    pad: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -630,13 +573,9 @@ layer {
   top: "fire7/squeeze1x1"
   convolution_param {
     num_output: 32
-    kernel: 1
+    kernel_size: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -665,17 +604,13 @@ layer {
 layer {
   name: "fire7/expand1x1"
   type: "Convolution"
-  bottom: "fire7/squeeze1x1"
+  bottom: "fire7/squeeze1x1_bn"
   top: "fire7/expand1x1"
   convolution_param {
     num_output: 128
-    kernel: 1
+    kernel_size: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -683,17 +618,14 @@ layer {
 layer {
   name: "fire7/expand3x3"
   type: "Convolution"
-  bottom: "fire7/squeeze1x1"
+  bottom: "fire7/squeeze1x1_bn"
   top: "fire7/expand3x3"
   convolution_param {
     num_output: 128
-    kernel: 3
+    kernel_size: 3
+    pad: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -733,13 +665,9 @@ layer {
   top: "fire8/squeeze1x1"
   convolution_param {
     num_output: 64
-    kernel: 1
+    kernel_size: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -768,17 +696,13 @@ layer {
 layer {
   name: "fire8/expand1x1"
   type: "Convolution"
-  bottom: "fire8/squeeze1x1"
+  bottom: "fire8/squeeze1x1_bn"
   top: "fire8/expand1x1"
   convolution_param {
     num_output: 256
-    kernel: 1
+    kernel_size: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -786,17 +710,14 @@ layer {
 layer {
   name: "fire8/expand3x3"
   type: "Convolution"
-  bottom: "fire8/squeeze1x1"
+  bottom: "fire8/squeeze1x1_bn"
   top: "fire8/expand3x3"
   convolution_param {
     num_output: 256
-    kernel: 3
+    kernel_size: 3
+    pad: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -836,13 +757,9 @@ layer {
   top: "fire9/squeeze1x1"
   convolution_param {
     num_output: 64
-    kernel: 1
+    kernel_size: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -871,17 +788,13 @@ layer {
 layer {
   name: "fire9/expand1x1"
   type: "Convolution"
-  bottom: "fire9/squeeze1x1"
+  bottom: "fire9/squeeze1x1_bn"
   top: "fire9/expand1x1"
   convolution_param {
     num_output: 256
-    kernel: 1
+    kernel_size: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -889,17 +802,14 @@ layer {
 layer {
   name: "fire9/expand3x3"
   type: "Convolution"
-  bottom: "fire9/squeeze1x1"
+  bottom: "fire9/squeeze1x1_bn"
   top: "fire9/expand3x3"
   convolution_param {
     num_output: 256
-    kernel: 3
+    kernel_size: 3
+    pad: 1
     weight_filler {
       type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-      value: 0
     }
     bias_term: false
   }
@@ -933,22 +843,13 @@ layer {
   top: "fire9/concat_bn"
 }
 layer {
-  name: "drop9"
-  type: "Dropout"
-  bottom: "fire9/concat_bn"
-  top: "fire9/concat_bn"
-  dropout_param {
-    dropout_ratio: 0.2
-  }
-}
-layer {
   name: "conv10"
   type: "Convolution"
-  bottom: "fire9/concat"
+  bottom: "fire9/concat_bn"
   top: "conv10"
   convolution_param {
     num_output: 1000
-    kernel: 1
+    kernel_size: 1
     weight_filler {
       type: "gaussian"
       mean: 0
@@ -984,7 +885,7 @@ layer {
 layer {
   name: "pool10"
   type: "Pooling"
-  bottom: "conv10"
+  bottom: "conv10_bn"
   top: "pool10"
   pooling_param {
     pool: AVE
