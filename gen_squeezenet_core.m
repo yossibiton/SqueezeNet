@@ -1,5 +1,9 @@
 function body = gen_squeezenet_core(S_1x1, E_1x1, E_3x3, pool_layers, add_mult, add_batch_norm)
 
+if ~exist('inspect', 'var')
+    inspect = false;
+end
+
 conv1 = [3 64];
 body = {};
 

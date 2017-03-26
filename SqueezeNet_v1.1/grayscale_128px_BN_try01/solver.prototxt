@@ -1,0 +1,17 @@
+test_iter : 400
+test_interval : 1000
+base_lr : 0.04
+display : 40
+max_iter : 170000
+lr_policy : "poly"
+power : 1.0
+momentum : 0.9
+weight_decay : 0.0002
+snapshot : 10000
+snapshot_prefix : "../../output/SqueezeNet_v1.1/grayscale_128px_BN/train"
+solver_mode : GPU
+random_seed : 42
+net : "train_val.prototxt"
+test_initialization : false
+average_loss : 40
+iter_size : 2
